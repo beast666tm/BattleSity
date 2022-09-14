@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Battle Sity");
+		//		config.setWindowedMode(1024, 800); // задаёт размер окна
 		new Lwjgl3Application(new TanksGdxGame(), config);
 	}
 }
