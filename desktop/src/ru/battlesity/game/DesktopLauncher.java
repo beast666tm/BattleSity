@@ -2,15 +2,15 @@ package ru.battlesity.game;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ru.battlesity.game.TanksGdxGame;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
-	public static void main (String[] arg) {
-		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
-		config.setTitle("Battle Sity");
-		//		config.setWindowedMode(1024, 800); // задаёт размер окна
-		new Lwjgl3Application(new TanksGdxGame(), config);
-	}
+    public static void main(String[] arg) {
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        config.setForegroundFPS(60);
+        config.setTitle("Battle Sity");
+        config.setWindowedMode(800, 600); // задаёт размер окна
+        config.setAudioConfig(32, 512, 16);
+        new Lwjgl3Application(new GdxGame(), config);
+    }
 }

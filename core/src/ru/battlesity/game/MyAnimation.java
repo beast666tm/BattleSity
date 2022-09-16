@@ -9,12 +9,15 @@ public class MyAnimation {
     Animation<TextureRegion> animation;
     private float time;
 
-    public MyAnimation(String name, int row, int col, float fps, Animation.PlayMode playMode) {
-        time = 0f;
+    public MyAnimation(String name, int row, int col, float fps, Animation.PlayMode playMode){
+        time = 0;
         img = new Texture(name);
-        TextureRegion region1 = new TextureRegion(img);
-        TextureRegion[][] regions = region1.split(img.getWidth() / col, img.getHeight() / row);
-        animation = new Animation<TextureRegion>(1 / fps, regions[0]);
+        TextureRegion reg1 = new TextureRegion(img);
+        TextureRegion[][] regions = reg1.split(img.getWidth()/col, img.getHeight()/row);
+        TextureRegion[] tmp = new TextureRegion[regions.length*regions[0].length];
+        int cnt = 0;
+        for (TextureRegion[] region : regions) {for (TextureRegion reg: region) tmp[cnt++] = reg;}
+        animation = new Animation<>(1/fps, tmp);
         animation.setPlayMode(playMode);
     }
 

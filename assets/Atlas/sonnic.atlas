@@ -1,0 +1,209 @@
+
+sonnic.png
+size: 2048, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+jump
+  rotate: false
+  xy: 2, 120
+  size: 84, 133
+  orig: 100, 372
+  offset: 9, 119
+  index: 2
+jump
+  rotate: false
+  xy: 88, 120
+  size: 83, 133
+  orig: 100, 372
+  offset: 11, 119
+  index: 3
+jump
+  rotate: false
+  xy: 185, 6
+  size: 79, 129
+  orig: 100, 372
+  offset: 5, 119
+  index: 5
+jump
+  rotate: false
+  xy: 266, 6
+  size: 79, 129
+  orig: 100, 372
+  offset: 11, 119
+  index: 4
+jump
+  rotate: false
+  xy: 347, 6
+  size: 78, 129
+  orig: 100, 372
+  offset: 16, 119
+  index: 1
+run
+  rotate: false
+  xy: 2, 2
+  size: 99, 116
+  orig: 100, 186
+  offset: 1, 64
+  index: 8
+run
+  rotate: false
+  xy: 173, 137
+  size: 98, 116
+  orig: 100, 186
+  offset: 0, 63
+  index: 3
+run
+  rotate: false
+  xy: 273, 137
+  size: 98, 116
+  orig: 100, 186
+  offset: 2, 63
+  index: 2
+run
+  rotate: false
+  xy: 373, 140
+  size: 100, 113
+  orig: 100, 186
+  offset: 0, 26
+  index: 12
+run
+  rotate: false
+  xy: 475, 140
+  size: 99, 113
+  orig: 100, 186
+  offset: 0, 27
+  index: 17
+run
+  rotate: false
+  xy: 576, 137
+  size: 92, 116
+  orig: 100, 186
+  offset: 4, 27
+  index: 16
+run
+  rotate: false
+  xy: 670, 137
+  size: 91, 116
+  orig: 100, 186
+  offset: 5, 24
+  index: 11
+run
+  rotate: false
+  xy: 763, 137
+  size: 91, 116
+  orig: 100, 186
+  offset: 4, 64
+  index: 7
+run
+  rotate: false
+  xy: 856, 137
+  size: 91, 116
+  orig: 100, 186
+  offset: 6, 27
+  index: 13
+run
+  rotate: false
+  xy: 949, 137
+  size: 90, 116
+  orig: 100, 186
+  offset: 6, 63
+  index: 4
+run
+  rotate: false
+  xy: 1041, 137
+  size: 90, 116
+  orig: 100, 186
+  offset: 7, 27
+  index: 18
+run
+  rotate: false
+  xy: 1133, 137
+  size: 86, 116
+  orig: 100, 186
+  offset: 9, 63
+  index: 9
+run
+  rotate: false
+  xy: 1746, 137
+  size: 85, 116
+  orig: 100, 186
+  offset: 6, 64
+  index: 6
+run
+  rotate: false
+  xy: 1833, 137
+  size: 85, 116
+  orig: 100, 186
+  offset: 5, 65
+  index: 5
+run
+  rotate: false
+  xy: 1920, 137
+  size: 84, 116
+  orig: 100, 186
+  offset: 5, 63
+  index: 1
+run
+  rotate: false
+  xy: 103, 2
+  size: 80, 116
+  orig: 100, 186
+  offset: 8, 26
+  index: 10
+run
+  rotate: false
+  xy: 427, 22
+  size: 81, 116
+  orig: 100, 186
+  offset: 12, 28
+  index: 15
+run
+  rotate: false
+  xy: 510, 19
+  size: 81, 116
+  orig: 100, 186
+  offset: 15, 27
+  index: 14
+stay
+  rotate: false
+  xy: 1221, 134
+  size: 86, 119
+  orig: 261, 372
+  offset: 6, 126
+  index: 6
+stay
+  rotate: false
+  xy: 1309, 134
+  size: 86, 119
+  orig: 95, 372
+  offset: 3, 126
+  index: 3
+stay
+  rotate: false
+  xy: 1397, 134
+  size: 86, 119
+  orig: 95, 372
+  offset: 2, 126
+  index: 2
+stay
+  rotate: false
+  xy: 1485, 134
+  size: 85, 119
+  orig: 260, 372
+  offset: 170, 126
+  index: 1
+stay
+  rotate: false
+  xy: 1572, 134
+  size: 85, 119
+  orig: 98, 372
+  offset: 7, 126
+  index: 5
+stay
+  rotate: false
+  xy: 1659, 134
+  size: 85, 119
+  orig: 91, 372
+  offset: 3, 126
+  index: 4
