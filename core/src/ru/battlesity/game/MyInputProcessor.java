@@ -4,26 +4,32 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
-public class MyInputProcessor implements InputProcessor {
-    private String outString = "";
+import java.util.ArrayList;
 
-    public String getOutString(){
+public class MyInputProcessor implements InputProcessor {
+    ArrayList outString = new ArrayList<>();
+
+    public MyInputProcessor() {
+        outString = new ArrayList<>();
+    }
+
+    public ArrayList getOutString(){
         return outString;
     }
 
     @Override
     public boolean keyDown(int keycode) {
         if (!outString.contains(Input.Keys.toString(keycode))) {
-            outString += Input.Keys.toString(keycode);
+            outString.add(Input.Keys.toString(keycode));
         }
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (outString.contains(Input.Keys.toString(keycode))) {
-            String tmp = outString.replace(Input.Keys.toString(keycode), "");
-            outString = tmp;
+       String s = Input.Keys.toString(keycode);
+       if(outString.contains(s)){
+           outString.remove(s);
         }return true;
     }
 
