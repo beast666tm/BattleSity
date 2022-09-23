@@ -1,0 +1,46 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Tile1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInEditor": 2
+        },
+        "Tile1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 787.3333333333333,
+                "y": 193.33333333333337
+            }
+        },
+        "Tile1.tmx#pngegg": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 0.75
+        },
+        "Tile1.tmx#terrein": {
+            "scaleInDock": 1
+        }
+    },
+    "frame.defaultDuration": 100,
+    "last.imagePath": "C:/Battle Sity/assets/Map",
+    "map.fixedSize": false,
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": null,
+    "openFiles": [
+        "Tile1.tmx"
+    ],
+    "project": "map.tiled-project",
+    "property.type": "float",
+    "recentFiles": [
+        "Tile1.tmx"
+    ],
+    "resizeMap.removeObjects": true,
+    "tileset.embedInMap": true,
+    "tileset.spacing": 1
+}
