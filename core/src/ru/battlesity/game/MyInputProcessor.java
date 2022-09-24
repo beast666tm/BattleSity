@@ -1,36 +1,60 @@
 package ru.battlesity.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-
-import java.util.ArrayList;
+import com.badlogic.gdx.math.Vector2;
 
 public class MyInputProcessor implements InputProcessor {
-    ArrayList outString = new ArrayList<>();
+    private Vector2 outForce;
 
     public MyInputProcessor() {
-        outString = new ArrayList<>();
+        outForce = new Vector2();
     }
 
-    public ArrayList getOutString(){
-        return outString;
+    public Vector2 getVector() {
+        return outForce;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (!outString.contains(Input.Keys.toString(keycode))) {
-            outString.add(Input.Keys.toString(keycode));
+        String inKey = Input.Keys.toString(keycode).toUpperCase();
+
+        switch (inKey) {
+            case "A":
+                outForce.add(-0.5f, 0);
+                break;
+            case "D":
+                outForce.add(0.5f, 0);
+                break;
+            case "S":
+                outForce.add(0, -1);
+                break;
+            case "SPACE":
+                outForce.add(0, 1);
+                break;
         }
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-       String s = Input.Keys.toString(keycode);
-       if(outString.contains(s)){
-           outString.remove(s);
-        }return true;
+        String inKey = Input.Keys.toString(keycode).toUpperCase();
+
+        switch (inKey) {
+            case "A":
+                outForce.set(0, outForce.y);
+                break;
+            case "D":
+                outForce.set(0, outForce.y);
+                break;
+            case "S":
+                outForce.set(outForce.x, 0);
+                break;
+            case "SPACE":
+                outForce.set(outForce.x, 0);
+                break;
+        }
+        return true;
     }
 
     @Override
