@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class MyAtlas {
+public class MyAtlasAnimation {
     TextureAtlas atlas;
     Animation<TextureAtlas.AtlasRegion> animation;
     private float time;
@@ -14,7 +14,7 @@ public class MyAtlas {
     private boolean loop;
     private float d;
 
-    public MyAtlas(String atlas, String name, float fps, boolean playMode, String sound){
+    public MyAtlasAnimation(String atlas, String name, float fps, boolean playMode, String sound){
         if (playMode) loop = true;
         this.sound = Gdx.audio.newSound(Gdx.files.internal(sound));
         this.sound.play();

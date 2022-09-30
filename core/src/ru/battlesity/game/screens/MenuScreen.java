@@ -1,7 +1,4 @@
 package ru.battlesity.game.screens;
-/**
- * 46 : 21
- */
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -35,7 +32,7 @@ public class MenuScreen implements Screen {
         rectangle = new Rectangle(x, 0, sign.getWidth(), sign.getHeight());
         batch = new SpriteBatch();
 
-        music.setVolume(0.075f);
+        music.setVolume(0.05f);
         music.setLooping(true);
         music.play();
 

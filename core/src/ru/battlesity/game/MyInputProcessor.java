@@ -3,9 +3,17 @@ package ru.battlesity.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import ru.battlesity.game.persons.Sonic;
+
+import java.util.ArrayList;
 
 public class MyInputProcessor implements InputProcessor {
     private Vector2 outForce;
+    ArrayList outString = new ArrayList<>();
+
+    public ArrayList getOutString() {
+        return outString;
+    }
 
     public MyInputProcessor() {
         outForce = new Vector2();
@@ -21,17 +29,24 @@ public class MyInputProcessor implements InputProcessor {
 
         switch (inKey) {
             case "A":
-                outForce.add(-0.5f, 0);
+                outForce.add(-0.05f, 0);
                 break;
             case "D":
-                outForce.add(0.5f, 0);
+                outForce.add(0.05f, 0);
                 break;
             case "S":
-                outForce.add(0, -1);
+                outForce.add(0, -0.5f);
+                break;
+            case "W":
+
                 break;
             case "SPACE":
-                outForce.add(0, 1);
+//                if (MyConstantListener.cnt > 0) outForce.add(0, 1.1f);
+                if (Sonic.canJump) outForce.add(0, 1.1f);
                 break;
+            case "ESCAPE":
+                ;
+
         }
         return true;
     }
@@ -86,4 +101,5 @@ public class MyInputProcessor implements InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
+
 }
