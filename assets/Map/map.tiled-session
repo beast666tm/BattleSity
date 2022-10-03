@@ -9,7 +9,7 @@
     ],
     "fileStates": {
         "": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.33,
             "scaleInEditor": 4
         },
         "C:/Users/Beast/Downloads/Telegram Desktop/безымянный.tmx": {
@@ -34,18 +34,22 @@
             ],
             "expandedObjectLayers": [
                 4,
+                5,
                 6,
-                5
+                12
             ],
             "scale": 1,
-            "selectedLayer": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1286.5,
-                "y": 37
+                "x": 33.5,
+                "y": 131
             }
         },
         "Tile1.tmx#Lava #3": {
             "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tile1.tmx#backGround": {
             "scaleInEditor": 1
         },
         "Tile1.tmx#background": {
@@ -55,7 +59,7 @@
         },
         "Tile1.tmx#pngegg": {
             "dynamicWrapping": false,
-            "scaleInDock": 0.33,
+            "scaleInDock": 0.5,
             "scaleInEditor": 0.75
         },
         "Tile1.tmx#terrein": {
@@ -64,8 +68,8 @@
         },
         "набор Свойств.tmx": {
             "expandedObjectLayers": [
-                4,
                 3,
+                4,
                 5
             ],
             "scale": 1.6265151515151515,
@@ -81,7 +85,7 @@
         }
     },
     "frame.defaultDuration": 1001,
-    "last.imagePath": "C:/Battle Sity/assets/Map/Lava",
+    "last.imagePath": "C:/Battle Sity/assets/Map",
     "map.fixedSize": false,
     "map.lastUsedFormat": "tmx",
     "map.layerDataFormat": null,
@@ -99,8 +103,8 @@
     "tileset.margin": 0,
     "tileset.spacing": 0,
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 16,
+        "width": 16
     },
     "tileset.type": 0
 }

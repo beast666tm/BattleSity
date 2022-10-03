@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import ru.battlesity.game.persons.Sonic;
 
 public class MyAtlasAnimation {
     TextureAtlas atlas;
@@ -16,7 +17,7 @@ public class MyAtlasAnimation {
 
     public MyAtlasAnimation(String atlas, String name, float fps, boolean playMode, String sound){
         if (playMode) loop = true;
-        this.sound = Gdx.audio.newSound(Gdx.files.internal(sound));
+        this.sound = Gdx.audio.newSound(Gdx.files.internal(Sonic.sound));
         this.sound.play();
         time = 0;
         this.atlas = new TextureAtlas(atlas);

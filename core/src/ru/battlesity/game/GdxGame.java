@@ -122,7 +122,7 @@ public class GdxGame extends ApplicationAdapter {
 
         batch = new SpriteBatch();
         img = new Texture("logo.png");
-        stay = new MyAtlasAnimation("Atlas/sonic.atlas", "stay",7,true, "Sounds/sonic-run.mp3");
+        stay = new MyAtlasAnimation("Atlas/sonic.atlas", "stay",7,true,"Sounds/sonic-run.mp3");
         run = new MyAtlasAnimation("Atlas/sonic.atlas", "run", 10, true, "Sounds/sonic-run.mp3");
         jump = new MyAtlasAnimation("Atlas/sonic.atlas", "jump", 5, true, "Sounds/sonic-jump.mp3");
         tmpA = stay;

@@ -3,6 +3,7 @@ package ru.battlesity.game.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.battlesity.game.Label;
@@ -18,7 +19,7 @@ public class WinScreen implements Screen {
         this.game = game;
         fon = new Texture("Img/fon/fon.jpg");
         batch = new SpriteBatch();
-        label = new Label(100);
+        label = new Label(100, Color.ROYAL);
     }
 
     @Override

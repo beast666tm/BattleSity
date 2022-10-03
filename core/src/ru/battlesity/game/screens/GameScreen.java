@@ -2,6 +2,7 @@ package ru.battlesity.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class GameScreen implements Screen {
     Game game;
-    private final double viewZoom = 1.5f;
+    private final double viewZoom = 1.5f; //    ZOOM камеры соника
     private SpriteBatch batch;
     private Music music;
     private MyInputProcessor myInputProcessor;
@@ -45,7 +46,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game) {
 
-        font = new Label(20);
+        font = new Label(20, Color.GOLD);
 
         bodyToDelete = new ArrayList<>();
         ringAnm = new MyAnimation("Img/ring.png", 4, 8, 15, Animation.PlayMode.LOOP);
@@ -61,10 +62,11 @@ public class GameScreen implements Screen {
 
         physX = new PhysX();
 
-        Array<RectangleMapObject> objects = map.getLayers().get("env").getObjects().getByType(RectangleMapObject.class);
-        objects.addAll(map.getLayers().get("dyn").getObjects().getByType(RectangleMapObject.class));
+        Array<RectangleMapObject> objects = map.getLayers().get("static").getObjects().getByType(RectangleMapObject.class);
+        objects.addAll(map.getLayers().get("dynamic").getObjects().getByType(RectangleMapObject.class));
         for (int i = 0; i < objects.size; i++) {
             physX.addObject(objects.get(i));
+
         }
 
         objects.clear();
@@ -88,7 +90,7 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
 
         camera = new OrthographicCamera();
-        camera.zoom = (float) (1 / viewZoom);
+        camera.zoom = (float) (1f / viewZoom);
     }
 
     @Override
@@ -148,6 +150,10 @@ public class GameScreen implements Screen {
             ((PolygonShape) bd.getFixtureList().get(0).getShape()).setAsBox(cW / 2, cH / 2);
             batch.draw(tr, cx, cy, cW * PhysX.PPM, cH * PhysX.PPM);
         }
+        if((Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) & sonic.isCanJump()){
+            sonic.sonicJumpSFX.stop();
+            sonic.sonicJumpSFX.play(1, 1,0);
+        }
 
         batch.end();
 
@@ -161,7 +167,7 @@ public class GameScreen implements Screen {
         bodyToDelete.clear();
 
         physX.step();
-//        physX.debugDraw(camera);
+        physX.debugDraw(camera);        // отображение физики в левом нижнем углу карты
 
         if (rings.size == bodyToDelete.size()){
             dispose();

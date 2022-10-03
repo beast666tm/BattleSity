@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Label {
+    private final Color color;
     private BitmapFont font;
 
-    public Label(int size){
+    public Label(int size, Color color){
+        this.color = color;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("DiloWorld-mLJLv.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = size;
@@ -18,7 +20,7 @@ public class Label {
         parameter.genMipMaps = true;
         parameter.magFilter = Texture.TextureFilter.MipMapLinearNearest;
         font = generator.generateFont(parameter);
-        font.setColor(Color.GOLD);
+        font.setColor(this.color);
     }
 
 

@@ -42,7 +42,7 @@ public class MyInputProcessor implements InputProcessor {
                 break;
             case "SPACE":
 //                if (MyConstantListener.cnt > 0) outForce.add(0, 1.1f);
-                if (Sonic.canJump) outForce.add(0, 1.1f);
+                if (Sonic.canJump) outForce.add(0, 1.3f);
                 break;
             case "ESCAPE":
                 ;

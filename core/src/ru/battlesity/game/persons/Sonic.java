@@ -1,6 +1,7 @@
 package ru.battlesity.game.persons;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,15 +16,8 @@ import ru.battlesity.game.enums.Actions;
 import java.util.HashMap;
 
 public class Sonic {
+    public static String sound;
     public Sound sonicRunSFX, sonicJumpSFX, ringCollect;
-
-    public Sound getSonicRunSFX() {
-        return sonicRunSFX;
-    }
-
-    public Sound getSonicJumpSFX() {
-        return sonicJumpSFX;
-    }
 
     public Sound getRingCollect() {
         return ringCollect;
@@ -48,13 +42,13 @@ public class Sonic {
 
     public Sonic(Body body) {
         sonicRunSFX = Gdx.audio.newSound(Gdx.files.internal("Sounds/sonic-run.mp3"));
-        sonicRunSFX.setLooping((long) 0.1, true);
+        sonicRunSFX.setLooping(0, true);
 
         sonicJumpSFX = Gdx.audio.newSound(Gdx.files.internal("Sounds/sonic-jump.mp3"));
-        sonicJumpSFX.setLooping((long) 0.1, false);
+        sonicJumpSFX.setLooping(0, false);
 
         ringCollect = Gdx.audio.newSound(Gdx.files.internal("Sounds/collect-ring.mp3"));
-        ringCollect.setLooping((long) 0.5f, false);
+        ringCollect.setLooping(0, false);
 
         hitPoints = live = 100;
         this.body = body;
@@ -65,9 +59,11 @@ public class Sonic {
         sonicAnim.put(Actions.FAST_RUN, new Animation<TextureRegion>(FPS, atl.findRegions("fast-run")));
         sonicAnim.put(Actions.STAY, new Animation<TextureRegion>(FPS, atl.findRegions("stay")));
         sonicAnim.put(Actions.ROLL, new Animation<TextureRegion>(FPS, atl.findRegions("rolling")));
+        sonicAnim.put(Actions.SIT, new Animation<TextureRegion>(FPS, atl.findRegions("sonic-sit")));
         baseAnm = sonicAnim.get(Actions.STAY);
         loop = true;
         dir = Dir.LEFT;
+
     }
 
     public float getHit(float damage) {
@@ -104,6 +100,10 @@ public class Sonic {
         if (Math.abs(vector.y) > 1f && !isCanJump()) {
             setState(Actions.JUMP);
             loop = false;
+            baseAnm.setFrameDuration(FPS);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && onGround){
+            setState(Actions.SIT);
             baseAnm.setFrameDuration(FPS);
         }
     }
