@@ -1,23 +1,11 @@
 package ru.battlesity.game;
 
 import com.badlogic.gdx.physics.box2d.*;
-import ru.battlesity.game.persons.Sonic;
 import ru.battlesity.game.screens.GameScreen;
 
-public class MyConstantListener implements ContactListener {
+public class MyContactListener implements ContactListener {
     public static int cnt = 0;
-    private static int rings = 0;
     public static boolean isDamage = false;
-
-    public static String titleString = "Total rings: ";
-
-    public static int getRings() {
-        return rings;
-    }
-
-    public static void setRings(int rings) {
-        MyConstantListener.rings = rings;
-    }
 
     @Override
     public void beginContact(Contact contact) {
@@ -26,22 +14,18 @@ public class MyConstantListener implements ContactListener {
 
         if (a.getUserData().equals("Hero") && b.getUserData().equals("ring")) {
             GameScreen.bodyToDelete.add(b.getBody());
-//            Gdx.graphics.setTitle(String.valueOf(("Total rings: ") + (rings += 1)));
-            titleString = ("Total rings: ") + (++rings);
         }
         if (b.getUserData().equals("Hero") && a.getUserData().equals("ring")) {
             GameScreen.bodyToDelete.add(a.getBody());
-//            Gdx.graphics.setTitle(String.valueOf(("Total rings: ") + (rings += 1)));
-            titleString = ("Rings: ") + (++rings);
         }
 
         if (a.getUserData().equals("legs") && b.getUserData().equals("ground")) {
             //b.getBody().getLinearVelocity();
-            Sonic.canJump = true;
+
             cnt++;
         }
         if (b.getUserData().equals("legs") && a.getUserData().equals("ground")) {
-            Sonic.canJump = true;
+
             cnt++;
         }
         if (a.getUserData().equals("legs") && b.getUserData().equals("damage")) {
@@ -49,6 +33,15 @@ public class MyConstantListener implements ContactListener {
         }
         if (b.getUserData().equals("legs") && a.getUserData().equals("damage")) {
             isDamage = true;
+        }
+
+        if (a.getUserData().equals("bullet") && b.getUserData().equals("ground")) {
+            GameScreen.bodyToDelete.add(a.getBody());
+            a.setUserData("ballistic");
+        }
+        if (b.getUserData().equals("bullet") && a.getUserData().equals("ground")) {
+            GameScreen.bodyToDelete.add(b.getBody());
+            b.setUserData("ballistic");
         }
     }
 
@@ -58,11 +51,11 @@ public class MyConstantListener implements ContactListener {
         Fixture b = contact.getFixtureB();
 
         if (a.getUserData().equals("legs") && b.getUserData().equals("ground")) {
-            Sonic.canJump = false;
+
             cnt--;
         }
         if (b.getUserData().equals("legs") && a.getUserData().equals("ground")) {
-            Sonic.canJump = false;
+
             cnt--;
         }
         if (a.getUserData().equals("legs") && b.getUserData().equals("damage")) {

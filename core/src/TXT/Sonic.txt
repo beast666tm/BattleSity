@@ -17,28 +17,16 @@ import java.util.HashMap;
 
 public class Sonic {
     public static String sound;
-    private Sound sonicRunSFX, sonicJumpSFX, sonicLightSFX, ringCollect;
+    public Sound sonicRunSFX, sonicJumpSFX, ringCollect;
 
     public Sound getRingCollect() {
         return ringCollect;
     }
 
-    public Sound getSonicLightSFX() {
-        return sonicLightSFX;
-    }
-
-    public Sound getSonicRunSFX() {
-        return sonicRunSFX;
-    }
-
-    public Sound getSonicJumpSFX() {
-        return sonicJumpSFX;
-    }
-
     HashMap<Actions, Animation<TextureRegion>> sonicAnim;
     private final float FPS = 1 / 7f;
     private float time;
-    public static boolean canJump, isFire;
+    public static boolean canJump;
     private Animation<TextureRegion> baseAnm;
     private boolean loop;
     private TextureAtlas atl;
@@ -53,9 +41,6 @@ public class Sonic {
 
 
     public Sonic(Body body) {
-        sonicLightSFX = Gdx.audio.newSound(Gdx.files.internal("Sounds/light.mp3"));
-        sonicLightSFX.setLooping(0, false);
-
         sonicRunSFX = Gdx.audio.newSound(Gdx.files.internal("Sounds/sonic-run.mp3"));
         sonicRunSFX.setLooping(0, true);
 
@@ -75,7 +60,6 @@ public class Sonic {
         sonicAnim.put(Actions.STAY, new Animation<TextureRegion>(FPS, atl.findRegions("stay")));
         sonicAnim.put(Actions.ROLL, new Animation<TextureRegion>(FPS, atl.findRegions("rolling")));
         sonicAnim.put(Actions.SIT, new Animation<TextureRegion>(FPS, atl.findRegions("sonic-sit")));
-        sonicAnim.put(Actions.SHOOT, new Animation<TextureRegion>(FPS, atl.findRegions("sonic-shoot")));
         baseAnm = sonicAnim.get(Actions.STAY);
         loop = true;
         dir = Dir.LEFT;
@@ -96,48 +80,32 @@ public class Sonic {
         this.dir = dir;
     }
 
-    public int getDir() {
-        return (dir == Dir.LEFT) ? -1 : 1;
-    }
-
     public void setLoop(boolean loop) {
         this.loop = loop;
     }
-    private boolean isJump() {
-        return body.getUserData().equals("legs") || body.getUserData().equals("ground");
-    }
 
-    public Body setFPS(Vector2 vector, boolean onGround) {
+    public void setFPS(Vector2 vector, boolean onGround) {
         if (vector.x > 0.1f) setDir(Dir.RIGHT);
         if (vector.x < -0.1f) setDir(Dir.LEFT);
         float tmp = (float) (Math.sqrt(vector.x * vector.x + vector.y * vector.y)) * 10;
         setState(Actions.STAY);
-        if (isFire) {
-            setState(Actions.SHOOT);
-            return body;
-        }
         if (Math.abs(vector.x) > 0.25f && Math.abs(vector.y) < 10 && onGround) {
             setState(Actions.RUN);
-            baseAnm.setFrameDuration(5 / tmp);
-            return null;
+            baseAnm.setFrameDuration(1 / tmp);
         }
         if (Math.abs(vector.x) > 6.25f && Math.abs(vector.y) < 10 && onGround) {
             setState(Actions.FAST_RUN);
-            baseAnm.setFrameDuration(5 / tmp);
-            return null;
+            baseAnm.setFrameDuration(1 / tmp);
         }
-        if (Math.abs(vector.y) > 1f && canJump) { //или состояние isJump();
+        if (Math.abs(vector.y) > 1f && !isCanJump()) {
             setState(Actions.JUMP);
             loop = false;
             baseAnm.setFrameDuration(FPS);
-            return null;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.S) && onGround) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && onGround){
             setState(Actions.SIT);
             baseAnm.setFrameDuration(FPS);
-            return null;
         }
-        return null;
     }
 
     public float setTime(float deltaTime) {
@@ -151,10 +119,6 @@ public class Sonic {
             case STAY:
                 loop = true;
                 baseAnm.setFrameDuration(FPS);
-                break;
-            case SHOOT:
-                baseAnm.setFrameDuration(FPS);
-                loop = false;
                 break;
             case JUMP:
                 loop = false;

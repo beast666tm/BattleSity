@@ -21,8 +21,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import ru.battlesity.game.*;
-import ru.battlesity.game.enums.Actions;
-import ru.battlesity.game.persons.Bullet;
 import ru.battlesity.game.persons.Sonic;
 
 import java.util.ArrayList;
@@ -34,38 +32,24 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Music music;
     private MyInputProcessor myInputProcessor;
-    public static OrthographicCamera camera;
+    private OrthographicCamera camera;
     private PhysX physX;
     private Body body;
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
     private int[] front, rear;
     private final MyAnimation ringAnm;
-    private final MyAtlasAnimation bulletAmn;
     public static List<Body> bodyToDelete;
-    public static List<Bullet> bullets;
+
     private final Label font;
     private final Sonic sonic;
 
-    private static int ring;
-    private static int bulletsCnt;
-    public static String ringsCnt = "Total rings: ";
-
-    public static void setRing(int ring) {
-        GameScreen.ring = ring;
-    }
-
     public GameScreen(Game game) {
-        ring = 0;
-        bulletsCnt = 100;
 
         font = new Label(20, Color.GOLD);
 
         bodyToDelete = new ArrayList<>();
-        bullets = new ArrayList<>();
-
         ringAnm = new MyAnimation("Img/ring.png", 4, 8, 15, Animation.PlayMode.LOOP);
-        bulletAmn = new MyAtlasAnimation("Atlas/bullet.atlas", "shoot", 5, false, "Sounds/light.mp3");
         this.game = game;
 
         map = new TmxMapLoader().load("Map/Tile1.tmx");
@@ -82,16 +66,8 @@ public class GameScreen implements Screen {
         objects.addAll(map.getLayers().get("dynamic").getObjects().getByType(RectangleMapObject.class));
         for (int i = 0; i < objects.size; i++) {
             physX.addObject(objects.get(i));
+
         }
-
-
-        // lesson 8
-
-//        Array<PolylineMapObject> shape = map.getLayers().get("env").getObjects().getByType(PolylineMapObject.class);
-//        for (int i = 0; i < shape.size; i++) {
-//            physX.addObject(shape.get(i));
-//        }
-
 
         objects.clear();
         objects.addAll(map.getLayers().get("damage").getObjects().getByType(RectangleMapObject.class));
@@ -123,6 +99,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        MyInputProcessor mip = new MyInputProcessor();
         ScreenUtils.clear(Color.BLACK);
 
         camera.position.x = body.getPosition().x * physX.PPM;
@@ -134,28 +111,9 @@ public class GameScreen implements Screen {
 
         sonic.setTime(delta);
         Vector2 vector = myInputProcessor.getVector();
-        Body tBody = sonic.setFPS(body.getLinearVelocity(), true);
-        if (tBody != null & bulletsCnt > 0) {
-            bulletsCnt--;
-//            sonic.getSonicLightSFX().stop();
-//            sonic.getSonicLightSFX().play(1, 1, 0);
-            bullets.add(new Bullet(physX, tBody.getPosition().x, tBody.getPosition().y, sonic.getDir()));
-        } else if (tBody != null) sonic.setState(Actions.STAY);
-
-        if (MyContactListener.cnt < 1) {
-            vector.set(vector.x * 0.95f, 0);
-        }
+        if (MyConstantListener.cnt < 1) vector.set(vector.x, 0);
         body.applyForceToCenter(vector, true);
-
-        ArrayList<Bullet> bTmp = new ArrayList<>();
-        for (Bullet b : bullets) {
-            Body tB = b.update(delta);
-            if (tB != null) {
-                bodyToDelete.add(tB);
-                bTmp.add(b);
-            }
-        }
-        bullets.removeAll(bTmp);
+        sonic.setFPS(body.getLinearVelocity(), true);
 
         Rectangle tmp = sonic.getRect(camera, sonic.getFrame());
         ((PolygonShape) body.getFixtureList().get(0).getShape()).setAsBox(tmp.width / 2, tmp.height / 2);
@@ -170,7 +128,7 @@ public class GameScreen implements Screen {
 
         font.draw(
                 batch,
-                ringsCnt,
+                MyConstantListener.titleString,
                 tmp.x - (Gdx.graphics.getWidth() / 3.5f),
                 tmp.y + (Gdx.graphics.getHeight() / 3));
 
@@ -182,7 +140,7 @@ public class GameScreen implements Screen {
 
         Array<Body> rings = physX.getBodys("ring");
         ringAnm.setTime(delta);
-        TextureRegion tr = ringAnm.draw();    // анимация колец
+        TextureRegion tr = ringAnm.draw();
         float dScale = 3f;
         for (Body bd : rings) {
             float cx = bd.getPosition().x * PhysX.PPM - tr.getRegionWidth() / 2 / dScale;
@@ -192,10 +150,9 @@ public class GameScreen implements Screen {
             ((PolygonShape) bd.getFixtureList().get(0).getShape()).setAsBox(cW / 2, cH / 2);
             batch.draw(tr, cx, cy, cW * PhysX.PPM, cH * PhysX.PPM);
         }
-
-        if ((Gdx.input.isKeyJustPressed(Input.Keys.W)) & sonic.isCanJump()) {
-            sonic.getSonicJumpSFX().stop();
-            sonic.getSonicJumpSFX().play(1, 1, 0);
+        if((Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) & sonic.isCanJump()){
+            sonic.sonicJumpSFX.stop();
+            sonic.sonicJumpSFX.play(1, 1,0);
         }
 
         batch.end();
@@ -203,35 +160,24 @@ public class GameScreen implements Screen {
         mapRenderer.render(front);
 
         for (Body bd : bodyToDelete) {
-            if (bd.getUserData() != null && bd.getUserData().equals("ring")) {
-                ++ring;
-                sonic.getRingCollect().stop();
-                sonic.getRingCollect().play(0.5f, 1, 0);
-                physX.destroyBody(bd);
-            }
-            if (bd.getUserData() != null && bd.getUserData().equals("bullets")) ;
-//            if (bd.getUserData() != null && bd.getUserData().equals("ballistic")) {
-//
-//                sonic.sonicRunSFX.stop();
-//                sonic.sonicRunSFX.play(1,1,0);
-//                physX.destroyBody(bd);
-//            }
+            sonic.getRingCollect().stop();
+            sonic.getRingCollect().play(0.5f, 1, 0);
+            physX.destroyBody(bd);
         }
         bodyToDelete.clear();
 
         physX.step();
         physX.debugDraw(camera);        // отображение физики в левом нижнем углу карты
 
-        if (rings.size == bodyToDelete.size()) {
+        if (rings.size == bodyToDelete.size()){
             dispose();
-            setRing(0);
             game.setScreen(new WinScreen(game));
         }
 
-        if (MyContactListener.isDamage) {
+        if (MyConstantListener.isDamage) {
             if (sonic.getHit(1) < 1) {
                 dispose();
-                setRing(0);
+                MyConstantListener.setRings(0);
                 game.setScreen(new GameOverScreen(game));
             }
         }

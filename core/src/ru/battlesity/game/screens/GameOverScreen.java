@@ -3,6 +3,7 @@ package ru.battlesity.game.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,12 +14,18 @@ public class GameOverScreen implements Screen {
     Texture gameOverFon;
     SpriteBatch batch;
     Label label;
+    Music gameOver;
 
     public GameOverScreen(Game game) {
         this.game = game;
         gameOverFon = new Texture("Img/fon/GameOver.jpg");
         batch = new SpriteBatch();
         label = new Label(50, Color.RED);
+        gameOver = Gdx.audio.newMusic(Gdx.files.internal("Music/game-over.mp3"));
+        gameOver.setLooping(false);
+        gameOver.setVolume(0.1f);
+        gameOver.play();
+
     }
 
     @Override
@@ -38,7 +45,7 @@ public class GameOverScreen implements Screen {
         if (Gdx.input.isTouched()) {
             dispose();
             game.setScreen(new GameScreen(game));
-//            MyConstantListener.setRings(0);
+//            MyContactListener.setRings(0);
         }
     }
 
@@ -67,5 +74,6 @@ public class GameOverScreen implements Screen {
         this.gameOverFon.dispose();
         this.batch.dispose();
         this.label.dispose();
+        gameOver.dispose();
     }
 }

@@ -3,23 +3,28 @@ package ru.battlesity.game.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.battlesity.game.Label;
-import ru.battlesity.game.MyConstantListener;
 
 public class WinScreen implements Screen {
-    Game game;
-    Texture fon;
-    SpriteBatch batch;
-    Label label;
+    private Game game;
+    private Texture fon;
+    private SpriteBatch batch;
+    private Label label;
+    private Music win;
 
     public WinScreen(Game game) {
         this.game = game;
         fon = new Texture("Img/fon/fon.jpg");
         batch = new SpriteBatch();
         label = new Label(100, Color.ROYAL);
+        win = Gdx.audio.newMusic(Gdx.files.internal("Music/sonic-win.mp3"));
+        win.setVolume(0.25f);
+        win.setLooping(false);
+        win.play();
     }
 
     @Override
@@ -40,10 +45,7 @@ public class WinScreen implements Screen {
         if (Gdx.input.isTouched()) {
             dispose();
             game.setScreen(new MenuScreen(game));
-            MyConstantListener.setRings(0);
-
         }
-
     }
 
     @Override
@@ -71,5 +73,6 @@ public class WinScreen implements Screen {
         this.batch.dispose();
         this.fon.dispose();
         this.label.dispose();
+        win.dispose();
     }
 }
