@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.battlesity.game.Label;
@@ -20,7 +19,7 @@ public class WinScreen implements Screen {
         this.game = game;
         fon = new Texture("Img/fon/fon.jpg");
         batch = new SpriteBatch();
-        label = new Label(100, Color.ROYAL);
+        label = new Label(100);
         win = Gdx.audio.newMusic(Gdx.files.internal("Music/sonic-win.mp3"));
         win.setVolume(0.25f);
         win.setLooping(false);
@@ -40,12 +39,18 @@ public class WinScreen implements Screen {
                 "You Win",
                 Gdx.graphics.getWidth() / 3,
                 Gdx.graphics.getHeight() >> 1);
+
         batch.end();
 
         if (Gdx.input.isTouched()) {
             dispose();
             game.setScreen(new MenuScreen(game));
         }
+    }
+
+    public int resetRings(int rings){
+
+        return rings;
     }
 
     @Override

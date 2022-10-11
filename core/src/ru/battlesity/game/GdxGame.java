@@ -2,252 +2,118 @@ package ru.battlesity.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import ru.battlesity.game.enums.Actions;
+
+import java.util.HashMap;
 
 public class GdxGame extends ApplicationAdapter {
-    private SpriteBatch batch;  // вывод изображений
-    private Texture img;        // шкурка графических объектов
-    private Rectangle rectangle, window;
-    private MyAtlasAnimation stay, run, jump, tmpA;
-    private MyInputProcessor mip;
-    private float x, y;
-    private int dir = 0, step = 5;
+    private SpriteBatch batch;
+    private Texture img;
+    private HashMap<Actions, MyAtlasAnimation> manAssetss;
+    private Music music;
+    private Sound sound;
+    private MyInputProcessor myInputProcessor;
+    private OrthographicCamera camera;
     private PhysX physX;
     private Body body;
-    private OrthographicCamera camera;
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
-    private final int a = 20;
-    private final int b = 20; // отступ от левого и нижнего края
-    private final float zoom = 1.25f;
-    private Music music;
-    private Sound sonicRunSFX, sonicJumpSFX;
+    private Actions actions;
 
     @Override
-    public void create() {
-        map = new TmxMapLoader().load("Map/Tile1.tmx");
+    public void create () {
+        map = new TmxMapLoader().load("map/безымянный.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
-
         physX = new PhysX();
-        BodyDef def = new BodyDef();
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
 
-        def.type = BodyDef.BodyType.StaticBody;
-        fdef.shape = shape;
-        fdef.density = 1;                       //  плотность
-        fdef.friction = 0;                      //  фрикция
-        fdef.restitution = 1;                   //  упругость
-        MapLayer env = map.getLayers().get("env");
-        Array<RectangleMapObject> rect = env.getObjects().getByType(RectangleMapObject.class);
-        for (int i = 0; i < rect.size; i++) {
-            float x = rect.get(i).getRectangle().x + rect.get(i).getRectangle().width / 2;
-            float y = rect.get(i).getRectangle().y + rect.get(i).getRectangle().height / 2;
-            float w = rect.get(i).getRectangle().width / 2;
-            float h = rect.get(i).getRectangle().height / 2;
-            def.position.set(x, y);
-            shape.setAsBox(w, h);
-            physX.world.createBody(def).createFixture(fdef).setUserData("Kub");
+        Array<RectangleMapObject> objects = map.getLayers().get("env").getObjects().getByType(RectangleMapObject.class);
+        objects.addAll(map.getLayers().get("dyn").getObjects().getByType(RectangleMapObject.class));
+        for (int i = 0; i < objects.size; i++) {
+            physX.addObject(objects.get(i));
         }
+        body = physX.addObject((RectangleMapObject) map.getLayers().get("hero").getObjects().get("Hero"));
+        body.setFixedRotation(true);
 
-        def.type = BodyDef.BodyType.DynamicBody;
-        def.gravityScale = 1;
-        env = map.getLayers().get("dyn");
-        rect = env.getObjects().getByType(RectangleMapObject.class);
-        for (int i = 0; i < rect.size; i++) {
-            float x = rect.get(i).getRectangle().x + rect.get(i).getRectangle().width / 2;
-            float y = rect.get(i).getRectangle().y + rect.get(i).getRectangle().height / 2;
-            float w = rect.get(i).getRectangle().width / 2;
-            float h = rect.get(i).getRectangle().height / 2;
-            def.position.set(x, y);
-            shape.setAsBox(w, h);
-            fdef.density = 1;
-            fdef.friction = 0;
-            fdef.restitution = 1;
-            physX.world.createBody(def).createFixture(fdef).setUserData("Kub");
-        }
+        myInputProcessor = new MyInputProcessor();
+        Gdx.input.setInputProcessor(myInputProcessor);
 
-        env = map.getLayers().get("hero");
-        RectangleMapObject hero = (RectangleMapObject) env.getObjects().get("Hero");
-        float x = hero.getRectangle().x +hero.getRectangle().width / 2;
-        float y = hero.getRectangle().y +hero.getRectangle().height / 2;
-        float w = hero.getRectangle().width / 2;
-        float h = hero.getRectangle().height / 2;
-        def.position.set(x, y);
-        shape.setAsBox(w, h);
-        fdef.shape = shape;
-        fdef.density = 1;
-        fdef.friction = 0;
-        fdef.restitution = 1;
-        body = physX.world.createBody(def);
-        body.createFixture(fdef).setUserData("Kub");
-
-        shape.dispose();
-
-        rectangle = new Rectangle();
-        window = new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        mip = new MyInputProcessor();
-        Gdx.input.setInputProcessor(mip);
-
-        music = Gdx.audio.newMusic(Gdx.files.internal("Music/OST Sonic — Ending Theme.mp3"));
-        music.setVolume(0.075f);
+        music = Gdx.audio.newMusic(Gdx.files.internal("MC_Hammer_-_U_Cant_Touch_This_b128f0d256.mp3"));
+        music.setVolume(0.025f);
         music.setLooping(true);
         music.play();
 
-        sonicRunSFX = Gdx.audio.newSound(Gdx.files.internal("Sounds/sonic-run.mp3"));
-        sonicRunSFX.setLooping(1, true);
-
-        sonicJumpSFX = Gdx.audio.newSound(Gdx.files.internal("Sounds/sonic-jump.mp3"));
-        sonicJumpSFX.setLooping(1, true);
+        sound = Gdx.audio.newSound(Gdx.files.internal("7b999d49fa57974.mp3"));
 
         batch = new SpriteBatch();
-        img = new Texture("logo.png");
-        stay = new MyAtlasAnimation("Atlas/sonic.atlas", "stay",7,true,"Sounds/sonic-run.mp3");
-        run = new MyAtlasAnimation("Atlas/sonic.atlas", "run", 10, true, "Sounds/sonic-run.mp3");
-        jump = new MyAtlasAnimation("Atlas/sonic.atlas", "jump", 5, true, "Sounds/sonic-jump.mp3");
-        tmpA = stay;
+        img = new Texture("badlogic.jpg");
 
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        manAssetss = new HashMap<>();
+        manAssetss.put(Actions.STAY, new MyAtlasAnimation("atlas/jamp.atlas", "stand", 17, false, "single_on_dirty_stone_step_flip_flop_007_30443.mp3"));
+        manAssetss.put(Actions.RUN, new MyAtlasAnimation("atlas/jamp.atlas", "run", 17, true, "single_on_dirty_stone_step_flip_flop_007_30443.mp3"));
+        manAssetss.put(Actions.JUMP, new MyAtlasAnimation("atlas/jamp.atlas", "jamp", 17, true, "single_on_dirty_stone_step_flip_flop_007_30443.mp3"));
+        actions = Actions.STAY;
 
+        camera = new OrthographicCamera();
     }
-
     @Override
-    public void render() {
-        ScreenUtils.clear(0, 0, 0, 1); // RGB (от 0 до 1) , a - прозрачность (от 0 до 1)
+    public void render () {
+        ScreenUtils.clear(Color.BLACK);
 
         camera.position.x = body.getPosition().x;
         camera.position.y = body.getPosition().y;
-        camera.zoom = 1f / zoom;
+        camera.zoom = 0.5f;
         camera.update();
 
         mapRenderer.setView(camera);
         mapRenderer.render();
 
-        tmpA = stay;
-        dir = 0;
+        manAssetss.get(actions).setTime(Gdx.graphics.getDeltaTime());
+        body.applyForceToCenter(myInputProcessor.getVector(), true);
 
-        /* Controls */
+        if (body.getLinearVelocity().len() < 0.6f) actions = Actions.STAY;
+        else if (Math.abs(body.getLinearVelocity().x) > 0.6f) {actions = Actions.RUN;}
 
-        if (mip.getOutString().contains("A")) {
-            dir = -1;
-            body.applyForceToCenter(new Vector2(-10_000_000f, 0f),true);
-            tmpA = run;
-            if (run.equals(tmpA) & Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-                sonicRunSFX.stop();
-                sonicRunSFX.play(1, 1, 0);
-                if (tmpA.equals(stay)) {
-                    sonicRunSFX.stop();
-                }
-            }
-        }
+        manAssetss.get(actions).setTime(Gdx.graphics.getDeltaTime());
+        if (!manAssetss.get(actions).draw().isFlipX() & body.getLinearVelocity().x < -0.6f) {manAssetss.get(actions).draw().flip(true, false);}
+        if (manAssetss.get(actions).draw().isFlipX() & body.getLinearVelocity().x > 0.6f) {manAssetss.get(actions).draw().flip(true, false);}
 
-        if (mip.getOutString().contains("D")) {
-            dir = 1;
-            body.applyForceToCenter(new Vector2(10_000_000f, 0f),true);
-            tmpA = run;
-            if (run.equals(tmpA) & Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-                sonicRunSFX.stop();
-                sonicRunSFX.play(1, 1, 0);
-                if (tmpA.equals(stay)) {
-                    sonicRunSFX.stop();
-                }
-            }
-        }
-
-        if (mip.getOutString().contains("S")) {
-            tmpA = run;
-            y -= 5;
-            if (run.equals(tmpA) & Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-                sonicRunSFX.stop();
-                sonicRunSFX.play(1, 1, 0);
-            }
-        }
-
-        if (mip.getOutString().contains("W")) {
-            tmpA = run;
-            y += 5;
-            if (run.equals(tmpA) & Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-                sonicRunSFX.stop();
-                sonicRunSFX.play(1, 1, 0);
-            }
-        }
-
-        if (mip.getOutString().contains("Space")) {
-            body.applyForceToCenter(new Vector2(0, 100_000_000f),true);
-            y += 5;
-            tmpA = jump;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                sonicJumpSFX.stop();
-                sonicJumpSFX.play();
-            }
-        }
-
-        tmpA.setTime(Gdx.graphics.getDeltaTime());
-
-        if ((dir == -1) & mip.getOutString().contains("A")) x -= step;
-        if (dir == 1 & mip.getOutString().contains("D")) x += step;
-
-        TextureRegion tmp = tmpA.draw();
-        if (!tmpA.draw().isFlipX() & dir == -1) tmpA.draw().flip(true, false);
-        if (tmpA.draw().isFlipX() & dir == 1) tmpA.draw().flip(true, false);
-
-        rectangle.x = x;
-        rectangle.y = y;
-        rectangle.width = tmp.getRegionWidth();
-        rectangle.height = tmp.getRegionHeight();
-
-        float x = body.getPosition().x - 15 / camera.zoom;
-        float y = body.getPosition().y - 15 / camera.zoom;
+        float x = body.getPosition().x - 2.5f/camera.zoom;
+        float y = body.getPosition().y - 2.5f/camera.zoom;
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(tmpA.draw(), x, y, 30f / camera.zoom, 30f / camera.zoom);  //  отрисовка текущей анимации персонажа
+        batch.draw(manAssetss.get(actions).draw(), x, y);
         batch.end();
 
-        if (!window.contains(rectangle)) Gdx.graphics.setTitle(String.valueOf(mip.getVector()));
-        else Gdx.graphics.setTitle(String.valueOf(mip.getVector()));
-
+        Gdx.graphics.setTitle(String.valueOf(body.getLinearVelocity()));
         physX.step();
         physX.debugDraw(camera);
     }
-
     @Override
     public void resize(int width, int height) {
         camera.viewportHeight = height;
         camera.viewportWidth = width;
     }
-
     @Override
-    public void dispose() { // закрывает ресурсы
+    public void dispose () {
         batch.dispose();
-        stay.dispose();
-        run.dispose();
-        jump.dispose();
-        tmpA.dispose();
+        img.dispose();
         music.dispose();
-        sonicRunSFX.dispose();
+        sound.dispose();
         map.dispose();
         mapRenderer.dispose();
-
     }
 }

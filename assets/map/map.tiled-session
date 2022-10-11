@@ -7,6 +7,7 @@
     "expandedProjectPaths": [
         "."
     ],
+    "file.lastUsedOpenFilter": "Все файлы (*)",
     "fileStates": {
         "": {
             "scaleInDock": 0.33,
@@ -33,16 +34,16 @@
                 9
             ],
             "expandedObjectLayers": [
-                5,
                 12,
                 6,
+                5,
                 4
             ],
-            "scale": 0.75,
-            "selectedLayer": 3,
+            "scale": 3,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 1339.3333333333335,
-                "y": 106.66666666666669
+                "x": 427,
+                "y": 408
             }
         },
         "Tile1.tmx#Lava #3": {
@@ -66,17 +67,28 @@
             "scaleInDock": 0.33,
             "scaleInEditor": 2
         },
+        "безымянный.tmx": {
+            "scale": 0.5973484848484848,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 264.5022194039316,
+                "y": 101.28091312618903
+            }
+        },
+        "безымянный.tmx#monochrome_tilemap_transparent": {
+            "scaleInDock": 1
+        },
         "набор Свойств.tmx": {
             "expandedObjectLayers": [
-                5,
                 3,
-                4
+                4,
+                5
             ],
             "scale": 1.6265151515151515,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 264.06148113646947,
-                "y": 193.6655798789008
+                "x": 262.52445272473216,
+                "y": 192.74336283185838
             }
         },
         "набор Свойств.tmx#monochrome_tilemap_transparent": {
@@ -95,8 +107,8 @@
     "project": "map.tiled-project",
     "property.type": "float",
     "recentFiles": [
-        "набор Свойств.tmx",
-        "Tile1.tmx"
+        "Tile1.tmx",
+        "набор Свойств.tmx"
     ],
     "resizeMap.removeObjects": true,
     "tileset.embedInMap": true,

@@ -9,13 +9,6 @@ public class Main extends Game {
     public void create() {setScreen(new MenuScreen(this));}
 
     @Override
-    public void render() {
-        super.render();
-    }
+    public void render() {super.render();}
 
-    @Override
-    public void dispose() {
-        this.screen.dispose();
-
-    }
 }

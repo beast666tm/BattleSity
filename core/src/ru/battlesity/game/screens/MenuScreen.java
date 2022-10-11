@@ -18,12 +18,12 @@ public class MenuScreen implements Screen {
     Music music;
     SpriteBatch batch;
     int x, y;
-    Rectangle rectangle;
+    java.awt.Rectangle rectangle;
 
     public MenuScreen(Game game) {
         this.game = game;
         fon = new Texture("Img/fon/fon.jpg");
-        animation = new MyAnimation("animation/title/titleAnim.png", 2, 5, 3, Animation.PlayMode.LOOP);
+        animation = new MyAnimation("title/titleAnim.png", 2, 5, 3, Animation.PlayMode.LOOP);
         sign = new Texture("Img/StartButtonDown.gif");
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Music/OST Sonic — Ending Theme.mp3"));

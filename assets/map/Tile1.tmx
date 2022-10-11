@@ -47,7 +47,7 @@
   </data>
  </layer>
  <objectgroup id="4" name="dynamic">
-  <object id="62" name="ring" x="575.917" y="143.917" width="2" height="2">
+  <object id="62" name="ring" x="843.917" y="95.917" width="2" height="2">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -55,7 +55,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="65" name="ring" x="574.417" y="91.9167" width="2" height="2">
+  <object id="65" name="ring" x="310.417" y="110.917" width="2" height="2">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -71,7 +71,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="89" name="ring" x="574.945" y="45.2953" width="2" height="2">
+  <object id="89" name="ring" x="585.945" y="138.295" width="2" height="2">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -97,7 +97,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="54" x="2016" y="-36" width="14" height="532">
+  <object id="54" name="ground" x="2016" y="-36" width="14" height="532">
    <properties>
     <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0.5"/>
@@ -105,7 +105,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="55" x="0" y="-32" width="2044" height="14.6667">
+  <object id="55" name="ground" x="0" y="-32" width="2044" height="14.6667">
    <properties>
     <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0.5"/>
@@ -113,7 +113,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="52" name="lava" x="0" y="487.333" width="2022.67" height="7.33337">
+  <object id="52" name="ground" x="0" y="487.333" width="2022.67" height="7.33337">
    <properties>
     <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0.5"/>
@@ -209,15 +209,6 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="102" name="ground" x="1606" y="159.333">
-   <properties>
-    <property name="BodyType" value="StaticBody"/>
-    <property name="friction" type="float" value="0.5"/>
-    <property name="gravityScale" type="float" value="1"/>
-    <property name="restitution" type="float" value="0.25"/>
-   </properties>
-   <polyline points="0,0 224.667,-112.667 259.333,-114 409.333,-40"/>
-  </object>
   <object id="104" name="polyLine" x="133.667" y="202.333">
    <properties>
     <property name="BodyType" value="StaticBody"/>
@@ -239,9 +230,9 @@
   </object>
  </objectgroup>
  <objectgroup id="12" name="damage">
-  <object id="94" x="-36" y="470.5" width="2055" height="35.6667">
+  <object id="94" name="lava" x="-9" y="457.833" width="2055" height="35.6667">
    <properties>
-    <property name="damage" type="float" value="1"/>
+    <property name="lavaDamage" type="float" value="1"/>
    </properties>
   </object>
  </objectgroup>
