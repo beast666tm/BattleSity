@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="33" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="43">
+ <tileset firstgid="1" name="monochrome_tilemap_transparent" tilewidth="16" tileheight="16" spacing="1" tilecount="400" columns="20">
+  <image source="../../../Users/Beast/Downloads/Telegram Desktop/monochrome_tilemap_transparent.png" width="339" height="339"/>
+  <tile id="369">
+   <animation>
+    <frame tileid="369" duration="100"/>
+    <frame tileid="370" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer id="2" name="t0" width="33" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMNiBGhDvAGJBKBtECwOxOpTegYSFsMjD2DC9MHPUkdSqQvUi60MWcwRipwHEzkAMACsFDk8=
+  </data>
+ </layer>
+ <objectgroup id="3" name="env">
+  <object id="1" name="stone" x="-1.42222" y="192.111" width="530.134" height="2.55556">
+   <properties>
+    <property name="BodyType" value="StaticBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="2" name="stone" x="112.005" y="160.031" width="271.984" height="1.96875">
+   <properties>
+    <property name="BodyType" value="StaticBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="31" x="-2.3335" y="-0.666667" width="2.33367" height="195.956">
+   <properties>
+    <property name="BodyType" value="StaticBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="32" x="527.999" y="-0.9335" width="5.33367" height="194.667">
+   <properties>
+    <property name="BodyType" value="StaticBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="33" x="-2.3335" y="-1.33333" width="528.667" height="4">
+   <properties>
+    <property name="BodyType" value="StaticBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="dyn">
+  <object id="13" name="coins" x="3.8332" y="70.3335" width="12.6667" height="14">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="14" name="coins" x="71.167" y="42.3338" width="16.6667" height="19.3333">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="15" name="coins" x="262" y="42.9998" width="21.3333" height="18">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="16" name="coins" x="331.333" y="66.9998" width="20.6667" height="12">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="17" name="coins" x="304.5" y="16.5001" width="18.6667" height="10">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="18" name="coins" x="24.5" y="36.9998" width="15.3333" height="18.6667">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="19" name="coins" x="372.667" y="24.9998" width="22" height="22">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="20" name="coins" x="374" y="69.6668" width="29.3333" height="28">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="21" name="coins" x="355.167" y="35.8335" width="10" height="22">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="hero">
+  <object id="23" name="Hero" x="205.659" y="77.0455" width="4.8125" height="4.875">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer id="1" name="front" width="33" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAN/CRR/SgYBaNgFFADFDGi0iDQC8R9FOB+Iu3BB7YC8TYs+BQOcXS8nThr8IK7OMTvEan/PhXcQC8AAO8oGvg=
+  </data>
+ </layer>
+</map>

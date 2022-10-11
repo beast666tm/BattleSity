@@ -5,22 +5,48 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import ru.battlesity.game.persons.Sonic;
 
+import java.util.ArrayList;
+
 public class MyInputProcessor implements InputProcessor {
     private Vector2 outForce;
+    ArrayList outString = new ArrayList<>();
 
-    public MyInputProcessor(){
+    public ArrayList getOutString() {
+        return outString;
+    }
+
+    public MyInputProcessor() {
         outForce = new Vector2();
     }
-    public Vector2 getVector() {return outForce;}
+
+    public Vector2 getVector() {
+        return outForce;
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
-        switch (inKey){
-            case "A": outForce.add(-0.15f, 0); break;
-            case  "D": outForce.add(0.15f, 0); break;
-            case  "W": outForce.add(0, 1.3f); break;
-            case  "SPACE": Sonic.isFire = true; break;
+        switch (inKey) {
+            case "A":
+                outForce.add(-0.05f, 0);
+                break;
+            case "D":
+                outForce.add(0.05f, 0);
+                break;
+            case "S":
+                outForce.add(0, -0.5f);
+                break;
+            case "W":
+
+                break;
+            case "SPACE":
+//                if (MyConstantListener.cnt > 0) outForce.add(0, 1.1f);
+                if (Sonic.canJump) outForce.add(0, 1.3f);
+                break;
+            case "ESCAPE":
+                ;
+
         }
         return true;
     }
@@ -29,11 +55,19 @@ public class MyInputProcessor implements InputProcessor {
     public boolean keyUp(int keycode) {
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
-        switch (inKey){
-            case "A": outForce.set(0, outForce.y); break;
-            case  "D": outForce.set(0, outForce.y); break;
-            case  "W": outForce.set(outForce.x, 0); break;
-            case  "SPACE": Sonic.isFire = false; break;
+        switch (inKey) {
+            case "A":
+                outForce.set(0, outForce.y);
+                break;
+            case "D":
+                outForce.set(0, outForce.y);
+                break;
+            case "S":
+                outForce.set(outForce.x, 0);
+                break;
+            case "SPACE":
+                outForce.set(outForce.x, 0);
+                break;
         }
         return true;
     }
@@ -67,4 +101,5 @@ public class MyInputProcessor implements InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
+
 }
